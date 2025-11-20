@@ -7,11 +7,14 @@
     <title>After Owls | Intelligent Software Solutions</title>
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --text-color: #e0e0e0;
-            --accent-color: #3b82f6; /* Subtle tech blue */
-            --secondary-text: #888;
-            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg-color: #030305;
+            --text-color: #f0f0f0;
+            --accent-color: #3b82f6;
+            --accent-glow: #60a5fa;
+            --secondary-text: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --font-main: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         * {
@@ -32,99 +35,180 @@
             text-align: center;
             overflow: hidden;
             position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Subtle background grid effect */
+        /* --- Background Elements --- */
+
+        /* The Grid */
         .grid-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background-size: 50px 50px;
             z-index: -1;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
-            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+            pointer-events: none;
         }
 
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -2;
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #1e3a8a; /* Dark Blue */
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: #4c1d95; /* Dark Purple */
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, 50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* --- Main Content --- */
+
         .container {
-            padding: 2rem;
-            max-width: 800px;
-            animation: fadeIn 1.5s ease-out;
+            padding: 3rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            /* Glass Card Effect */
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Status Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.05);
+            color: #34d399;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulse 3s infinite;
         }
 
         h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            letter-spacing: -0.05em;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
             margin-bottom: 1rem;
-            background: linear-gradient(90deg, #fff, #aaa);
+            background: linear-gradient(to bottom right, #ffffff, #94a3b8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.1;
         }
 
         .tagline {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: var(--secondary-text);
-            margin-bottom: 2.5rem;
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            background: rgba(59, 130, 246, 0.1);
-            color: var(--accent-color);
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
             margin-bottom: 3rem;
-            backdrop-filter: blur(4px);
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 480px;
         }
 
+        /* Features List */
         .features {
+            width: 100%;
             display: flex;
-            gap: 2rem;
-            justify-content: center;
-            margin-bottom: 4rem;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--glass-border); /* Creates the borders between items */
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 3rem;
         }
 
         .feature-item {
+            background: rgba(255,255,255,0.02);
+            padding: 1.2rem;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            font-weight: 500;
             display: flex;
+            justify-content: center; /* Changed from space-between */
             align-items: center;
-            gap: 0.5rem;
-            color: var(--secondary-text);
+            transition: background 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(255,255,255,0.06);
+        }
+
+        .feature-item span:last-child {
+            color: var(--text-color); /* Reset secondary text color since stats are gone */
             font-size: 0.9rem;
         }
-
-        .feature-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-color);
-        }
-
+        
         .footer {
-            position: absolute;
-            bottom: 2rem;
+            margin-top: auto;
             font-size: 0.8rem;
-            color: #444;
+            color: #555;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         a {
             color: var(--secondary-text);
             text-decoration: none;
             transition: color 0.2s;
-            border-bottom: 1px dotted #555;
+            border-bottom: 1px dotted rgba(255,255,255,0.1);
+            padding-bottom: 2px;
         }
 
         a:hover {
@@ -132,50 +216,55 @@
             border-bottom-color: var(--accent-color);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes pulse {
+            0% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { opacity: 0.5; box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+            100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
+        /* Mobile Tweaks */
         @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            .tagline { font-size: 1rem; }
-            .features { flex-direction: column; gap: 1rem; }
+            .container { padding: 2rem 1.5rem; width: 95%; }
+            h1 { font-size: 2rem; }
+            .orb-1, .orb-2 { width: 250px; height: 250px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Background FX -->
     <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
     <div class="container">
-        <div class="badge">Private Beta</div>
+        <div class="badge">
+            <div class="badge-dot"></div>
+            Operating normally
+        </div>
         
         <h1>After Owls</h1>
         
         <p class="tagline">
-            Bridging the gap between cognitive intent and digital execution. <br>
-            We build intelligent desktop interfaces that adapt to your workflow.
+            Architecting adaptive intelligence for desktop environments. 
+            Bridging cognitive intent with digital execution.
         </p>
-
+        
         <div class="features">
             <div class="feature-item">
-                <div class="feature-dot"></div>
-                <span>Natural Language Processing</span>
+                <span>Neural Processing</span>
             </div>
             <div class="feature-item">
-                <div class="feature-dot"></div>
-                <span>Context-Aware Automation</span>
+                <span>Workflow Automation</span>
             </div>
             <div class="feature-item">
-                <div class="feature-dot"></div>
-                <span>Unified Desktop Control</span>
+                <span>Adaptive UI</span>
             </div>
         </div>
 
         <div class="footer">
-            <p>&copy; 2025 After Owls Studio. All rights reserved.</p>
-            <p style="margin-top: 0.5rem;">Contact: <a href="mailto:admin@afterowls.ca">admin@afterowls.ca</a></p>
+            <p>&copy; 2025 After Owls Studio. <span style="opacity: 0.3; margin: 0 5px;">/</span> Holyrood, NL</p>
+            <p><a href="mailto:admin@afterowls.ca">admin@afterowls.ca</a></p>
         </div>
     </div>
 
